@@ -13,3 +13,10 @@ class BlogPostRUDView(generics.RetrieveUpdateDestroyAPIView):
 	# def get_object(self):
 	# 	pk = self.kwargs.get("pk")
 	# 	return BlogPost.objects.get(pk=pk)
+
+class BlogPostAPIView(generics.CreateAPIView):
+	lookup_field = 'pk'
+	serializer_class = BlogPostSerializer
+
+	def get_queryset(self):
+		return BlogPost.objects.all()
