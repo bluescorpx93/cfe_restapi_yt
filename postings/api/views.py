@@ -1,5 +1,6 @@
 from rest_framework import generics, mixins
 from postings.models import BlogPost
+from .permissions import IsOwnerOrReadOnly
 from .serializers import BlogPostSerializer
 from django.db.models import Q
 
@@ -7,6 +8,7 @@ class BlogPostRUDView(generics.RetrieveUpdateDestroyAPIView):
 	lookup_field = 'pk'
 	#query_set = BlogPost.objects.all()
 	serializer_class = BlogPostSerializer
+	permission_classes = [IsOwnerOrReadOnly]
 
 	def get_queryset(self):
 		return BlogPost.objects.all()
