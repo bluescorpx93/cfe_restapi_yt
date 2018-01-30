@@ -2,12 +2,18 @@ from rest_framework import serializers
 from postings.models import BlogPost
 
 class BlogPostSerializer(serializers.ModelSerializer):
+	url = serializers.SerializerMethodField(read_only=True)
+
 	class Meta:
 		model = BlogPost
 		fields = [
-			'pk', 'user', 'title', 'content', 'timestamp'
+			'url', 'pk', 'user', 'title', 'content', 'timestamp'
 		]
 		read_only_fields = ['pk', 'user']
+
+	def get_url(self, obj):
+		request = self.context.get("request")
+		return obj.get_api_url()
 
 	def validate_title(self, value):
 
